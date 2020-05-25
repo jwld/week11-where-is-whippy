@@ -10,21 +10,22 @@ function verifyCustomer(req, res, next) {
   const authHeader = req.headers.authorization
   if (!authHeader) {
     const error = new Error("Authorization header required") //look into this
-    error.status = 400
+    error.status = 401
     next(error)
   }
   const token = authHeader.replace("Bearer ", "")
   try {
     const data = jwt.verify(token, SECRET)
     customerModel
-      .getCustomer(data.email)
-      .then((email) => {
-        req.email = email
+      .getSpecificCustomer(data.customerId)
+      .then((user) => {
+        console.log("verifyCustomer -> email", email)
+        req.user = user
         next()
       })
       .catch(next)
   } catch (_) {
-    const error = new Error("Unauthorized")
+    const error = new Error("Unauthorized. No Ice cream for you today")
     error.status = 401
     next(error)
   }
@@ -54,4 +55,4 @@ function verifyVendor(req, res, next) {
   }
 }
 
-model.exports = { verifyCustomer, verifyVendor }
+module.exports = { verifyCustomer, verifyVendor }

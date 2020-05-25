@@ -38,7 +38,7 @@ server.get("/static/*", (req, res) => {
 // REST API
 // GET
 server.get("/customers", customers.allCustomers)
-server.get("/customers/:id", customers.getSpecificCustomer)
+server.get("/customers/:id", auth.verifyCustomer, customers.getSpecificCustomer)
 server.get("/customers/coords", customerLocationsHandler.allCustomerLocations)
 server.get("/vendors", vendors.allVendors)
 server.get("/vendors/:id", vendors.getSpecificVendor)
