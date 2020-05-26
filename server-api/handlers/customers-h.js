@@ -40,6 +40,21 @@ function createCustomer(req, res, next) {
       res.status(201).send({ access_token: token })
     })
     .catch(next)
+
+    try {
+      const salt = await bcrypt.genSalt(10)
+      const hash = await bcrypt.hash(req.body.password, salt)
+
+      const customer = await customers.createCustomer({ ...newCustomer, password: hash })
+
+      const token = jwt.sign({ customerId: customer.id }, SECRET, {
+        expiresIn: "1h",
+      })
+      
+      res.status(201).send({ access_token: token })
+    } catch(err) {
+      next(err)
+    }
 }
 
 function loginCustomer(req, res, next) {

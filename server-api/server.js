@@ -1,11 +1,11 @@
 const express = require("express")
 
 // Handler modules
-const customerLocationsHandler = require("./handlers/customer-location-h")
-const vendorLocationsHandler = require("./handlers/vendor-location-h")
-const vendorRoutesHandler = require("./handlers/vendor-routes-h")
-const vendors = require("./handlers/vendors-h")
-const customers = require("./handlers/customers-h")
+const { customers } = require('./components')
+
+//
+customers.model
+customers.handlers
 
 // Middleware
 const handleError = require("./middleware/handleError")
@@ -37,7 +37,7 @@ server.get("/static/*", (req, res) => {
 
 // REST API
 // GET
-server.get("/customers", customers.allCustomers)
+server.get("/customers", handlers.customers.allCustomers)
 server.get("/customers/:id", customers.getSpecificCustomer)
 server.get("/customers/coords", customerLocationsHandler.allCustomerLocations)
 server.get("/vendors", vendors.allVendors)

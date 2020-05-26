@@ -4,7 +4,9 @@ import Landing from "./components/shared/landing.js"
 import Header from "./components/shared/header.js"
 import User from "./components/shared/user.js"
 import Signup from "./components/shared/signup.js"
-import Login from "./components/shared/login.js"
+
+import Login from "./components/shared/Login"
+
 import Home from "./components/vendor/home.js"
 import Heatmap from "./components/vendor/heatmap.js"
 // For react router
@@ -16,31 +18,33 @@ function App() {
   console.log("App -> isVendor", isVendor)
 
   return (
-    <Router>
-      <div className="App">
-        <Header logInStatus={logInStatus} />
-        <Switch>
-          <Route
-            path="/"
-            exact
-            render={() => (
-              <Landing setIsVendor={setIsVendor} isVendor={isVendor} />
-            )}
-          />
-          <Route path="/user" component={() => <User isVendor={isVendor} />} />
-          <Route
-            path="/signup"
-            component={() => <Signup isVendor={isVendor} />}
-          />
-          <Route
-            path="/login"
-            component={() => <Login isVendor={isVendor} />}
-          />
-          <Route path="/home" component={() => <Home />} />
-          <Route path="/heatmap" component={() => <Heatmap />} />
-        </Switch>
-      </div>
-    </Router>
+    <Authenticate>
+      <Router>
+        <div className="App">
+          <Header logInStatus={logInStatus} />
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => (
+                <Landing setIsVendor={setIsVendor} isVendor={isVendor} />
+              )}
+            />
+            <Route path="/user" component={() => <User isVendor={isVendor} />} />
+            <Route
+              path="/signup"
+              component={() => <Signup isVendor={isVendor} />}
+            />
+            <Route
+              path="/login"
+              component={() => <Login isVendor={isVendor} />}
+            />
+            <Route path="/home" component={() => <Home />} />
+            <Route path="/heatmap" component={() => <Heatmap />} />
+          </Switch>
+        </div>
+      </Router>
+    </Authenticate>
   )
 }
 

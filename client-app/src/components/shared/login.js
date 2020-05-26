@@ -1,33 +1,23 @@
 import React from "react"
 
 export default function Login({ isVendor }) {
+  const onSubmit = values => {
+    isVendor ? loginToVendor(values) : loginToCustomer(values)
+  }
+
+  const buttonClass = isVendor ? 'login-button-vendor' : 'login-button-customer'
+
   return (
     <section>
-      {isVendor ? (
-        <form>
-          <label for="vendorEmail">Email</label>
-          <input type="email" id="vendorEmail" name="email" required />
+      <form>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required />
 
-          <label for="vendorPassword">Password</label>
-          <input type="password" id="vendorPassword" name="password" required />
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required />
 
-          <button className="login-btn-vendor">Login</button>
-        </form>
-      ) : (
-        <form>
-          <label for="customerEmail">Email</label>
-          <input type="email" id="customerEmail" name="email" required />
-
-          <label for="customerPassword">Password</label>
-          <input
-            type="password"
-            id="customerPassword"
-            name="password"
-            required
-          />
-          <button className="login-btn-customer">Login</button>
-        </form>
-      )}
+        <button className={buttonClass}>Login</button>
+      </form>
     </section>
   )
 }
